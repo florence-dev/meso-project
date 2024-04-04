@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <title>Florence App</title>
+  </head>
+  <style>
+    body {
+      background-color: #f9f7fe;
+      font-family: "Roboto", sans-serif;
+    }
+
+    a {
+      color: #885df1;
+    }
+
+    .weather-app {
+      background: white;
+      max-width: 600px;
+      margin: 45px auto;
+      box-shadow: 0 30px 50px rgba(65, 50, 100, 0.08);
+      border-radius: 16px;
+      padding: 30px;
+    }
+
+    header {
+      border-bottom: 1px solid #f9f7fe;
+      padding: 0 0 30px 0;
+    }
+
+    .search-form-input {
+      background-color: #f9f7fe;
+      border: none;
+      border-radius: 6px;
+      width: 80%;
+      font-size: 16px;
+      padding: 15px 20px;
+    }
+
+    .search-form-button {
+      background: #885df1;
+      padding: 15px 30px;
+      border: none;
+      font-size: 16px;
+      margin-left: 5px;
+      border-radius: 6px;
+      color: white;
+    }
+
+    main {
+      padding: 30px 0;
+    }
+
+    .weather-app-data {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .weather-app-city {
+      margin: 0;
+      font-size: 38px;
+      line-height: 48px;
+    }
+
+    .weather-app-details {
+      font-size: 16px;
+      color: rgba(39, 33, 66, 0.4);
+      line-height: 24px;
+      font-weight: 500;
+    }
+
+    .weather-app-details strong {
+      color: #f65282;
+    }
+
+    .weather-app-temperature-container {
+      display: flex;
+    }
+
+    .weather-app-icon {
+      width: 88px;
+      height: 88px;
+    }
+
+    .weather-app-temperature {
+      font-size: 88px;
+      line-height: 88px;
+      font-weight: bold;
+    }
+
+    .weather-app-unit {
+      margin-top: 6px;
+      font-size: 28px;
+    }
+
+    .weather-forecast {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
+
+    .weather-forecast-date {
+      text-align: center;
+      color: rgba(39, 33, 66, 0.4);
+      font-size: 16px;
+      line-height: 20px;
+      margin-bottom: 10px;
+    }
+
+    .weather-forecast-icon {
+      font-size: 38px;
+      text-align: center;
+    }
+    .weather-forecast-temperatures {
+      text-align: center;
+      color: #f65282;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .weather-forecast-temperature {
+      padding: 0 10px;
+    }
+
+    footer {
+      border-top: 1px solid #f9f7fe;
+      padding: 30px 0 0 0;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  </style>
+  <body>
+    <div class="weather-app">
+      <header>
+        <form class="search-form" id="search-form">
+          <input
+            type="search"
+            placeholder="Enter a city.."
+            required
+            id="search-form-input"
+            class="search-form-input"
+          />
+          <input type="submit" value="Search" class="search-form-button" />
+        </form>
+      </header>
+      <main>
+        <div class="weather-app-data">
+          <div>
+            <h1 class="weather-app-city" id="city">Paris</h1>
+            <p class="weather-app-details">
+              <span id="time">Thursday 13:07</span>,
+              <span id="description">broken clouds</span>
+              <br />
+              Humidity: <strong id="humidity">82%</strong>, Wind:
+              <strong id="wind-speed">8.75km/h</strong>
+            </p>
+          </div>
+          <div class="weather-app-temperature-container">
+            <div id="icon">
+              <img
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+                class="weather-app-icon"
+              />
+            </div>
+            <div class="weather-app-temperature" id="temperature">16</div>
+            <div class="weather-app-unit">°C</div>
+          </div>
+        </div>
+        <div class="weather-forecast" id="forecast">
+          <div class="weather-forecast-day">
+            <div class="weather-forecast-date">Thu</div>
+
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/rain-day.png"
+              class="weather-forecast-icon"
+            />
+            <div class="weather-forecast-temperatures">
+              <div class="weather-forecast-temperature">
+                <strong>17º</strong>
+              </div>
+              <div class="weather-forecast-temperature">12º</div>
+            </div>
+          </div>
+
+          <div class="weather-forecast-day">
+            <div class="weather-forecast-date">Fri</div>
+
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+              class="weather-forecast-icon"
+            />
+            <div class="weather-forecast-temperatures">
+              <div class="weather-forecast-temperature">
+                <strong>19º</strong>
+              </div>
+              <div class="weather-forecast-temperature">13º</div>
+            </div>
+          </div>
+
+          <div class="weather-forecast-day">
+            <div class="weather-forecast-date">Sat</div>
+
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+              class="weather-forecast-icon"
+            />
+            <div class="weather-forecast-temperatures">
+              <div class="weather-forecast-temperature">
+                <strong>24º</strong>
+              </div>
+              <div class="weather-forecast-temperature">14º</div>
+            </div>
+          </div>
+
+          <div class="weather-forecast-day">
+            <div class="weather-forecast-date">Sun</div>
+
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/rain-day.png"
+              class="weather-forecast-icon"
+            />
+            <div class="weather-forecast-temperatures">
+              <div class="weather-forecast-temperature">
+                <strong>16º</strong>
+              </div>
+              <div class="weather-forecast-temperature">12º</div>
+            </div>
+          </div>
+
+          <div class="weather-forecast-day">
+            <div class="weather-forecast-date">Mon</div>
+
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/rain-day.png"
+              class="weather-forecast-icon"
+            />
+            <div class="weather-forecast-temperatures">
+              <div class="weather-forecast-temperature">
+                <strong>17º</strong>
+              </div>
+              <div class="weather-forecast-temperature">12º</div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        This project was coded by
+        <a href="https://github.com/" target="_blank"> Meso Florence</a>, is
+        <a href="https://github.com/" target="_blank">open-sourced on GitHub</a>
+        and
+        <a
+          href="https://app.netlify.com/teams/florence-dev/overview"
+          target="_blank"
+          >hosted on Netlify</a
+        >
+      </footer>
+    </div>
+    <script>
+      function refreshWeather(response) {
+        let temperatureElement = document.querySelector("#temperature");
+        let temperature = response.data.temperature.current;
+        let cityElement = document.querySelector("#city");
+        let descriptionElement = document.querySelector("#description");
+        let humidityElement = document.querySelector("#humidity");
+        let windSpeedElement = document.querySelector("#wind-speed");
+        let timeElement = document.querySelector("#time");
+        let date = new Date(response.data.time * 1000);
+        let iconElement = document.querySelector("#icon");
+
+        cityElement.innerHTML = response.data.city;
+        timeElement.innerHTML = formatDate(date);
+        descriptionElement.innerHTML = response.data.condition.description;
+        humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
+        windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
+        temperatureElement.innerHTML = Math.round(temperature);
+        iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
+
+        getForecast(response.data.city);
+      }
+
+      function formatDate(date) {
+        let minutes = date.getMinutes();
+        let hours = date.getHours();
+        let days = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        let day = days[date.getDay()];
+
+        if (minutes < 10) {
+          minutes = `0${minutes}`;
+        }
+
+        return `${day} ${hours}:${minutes}`;
+      }
+
+      function searchCity(city) {
+        let apiKey = "3da353e2d6ta419f246bf9ob29fabf00";
+        let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+        axios.get(apiUrl).then(refreshWeather);
+      }
+
+      function handleSearchSubmit(event) {
+        event.preventDefault();
+        let searchInput = document.querySelector("#search-form-input");
+
+        searchCity(searchInput.value);
+      }
+
+      function formatDay(timestamp) {
+        let date = new Date(timestamp * 1000);
+        let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        return days[date.getDay()];
+      }
+
+      function getForecast(city) {
+        let apiKey = "3da353e2d6ta419f246bf9ob29fabf00";
+        let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+        axios(apiUrl).then(displayForecast);
+      }
+
+      function displayForecast(response) {
+        let forecastHtml = "";
+
+        response.data.daily.forEach(function (day, index) {
+          if (index < 5) {
+            forecastHtml =
+              forecastHtml +
+              `
+      <div class="weather-forecast-day">
+        <div class="weather-forecast-date">${formatDay(day.time)}</div>
+
+        <img src="${day.condition.icon_url}" class="weather-forecast-icon" />
+        <div class="weather-forecast-temperatures">
+          <div class="weather-forecast-temperature">
+            <strong>${Math.round(day.temperature.maximum)}º</strong>
+          </div>
+          <div class="weather-forecast-temperature">${Math.round(
+            day.temperature.minimum
+          )}º</div>
+        </div>
+      </div>
+    `;
+          }
+        });
+
+        let forecastElement = document.querySelector("#forecast");
+        forecastElement.innerHTML = forecastHtml;
+      }
+
+      let searchFormElement = document.querySelector("#search-form");
+      searchFormElement.addEventListener("submit", handleSearchSubmit);
+
+      searchCity("Paris");
+    </script>
+  </body>
+</html>
